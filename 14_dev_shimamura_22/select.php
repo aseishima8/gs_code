@@ -1,8 +1,6 @@
 <?php
-
 include("funcs.php");
 $pdo = db_conn();
-
 
 //２．データ登録SQL作成
 $stmt = $pdo->prepare("SELECT * FROM gs_bm_table");
@@ -10,14 +8,19 @@ $status = $stmt->execute();
 
 //３．データ表示
 $view="";
-if($status==false){
+if($status==false) {
   sql_error();
 }else{
-  //Selectデータの数だけ自動でループしてくれる
-  //FETCH_ASSOC=http://php.net/manual/ja/pdostatement.fetch.php
-  
-  while( $result = $stmt->fetch(PDO::FETCH_ASSOC)){ 
-    $view .= $result["id"]."|".$result["name"]."<br>";
+  while( $r = $stmt->fetch(PDO::FETCH_ASSOC)){
+    $view .= '<p>'; 
+    $view .= '<a href="bm_update_view.php?id='.$r["id"].'">'; 
+    $view .= $r["id"]."|".$r["name"]."|".$r["url"];
+    $view .= '</a>'; 
+    $view .= "　"; 
+    $view .= '<a class="btn btn-danger" href="delete.php?id='.$r["id"].'">'; 
+    $view .= '[削除]';
+    $view .= '</a>'; 
+    $view .= '</p>'; 
   }
 }
 ?>
@@ -29,7 +32,7 @@ if($status==false){
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ブックマーク表示</title>
+<title>>ブックマーク表示</title>
 <link rel="stylesheet" href="css/range.css">
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <style>div{padding: 10px;font-size:16px;}</style>
