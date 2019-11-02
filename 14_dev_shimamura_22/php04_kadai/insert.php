@@ -19,6 +19,6 @@ $status = $stmt->execute(); //実行
 if($status==false){
   sql_error();
 }else{
-  redirect("index.php");
+  redirect("register.php");
 }
 ?>
